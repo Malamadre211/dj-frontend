@@ -1,0 +1,41 @@
+GET http://localhost:1337/api/chanteurs
+
+###
+GET http://localhost:1337/api/musiques
+
+###
+POST http://localhost:1337/api/chanteurs
+Content-Type: application/json
+
+{ "data": {
+  "Nom": "Calearo",
+  "Prenom": "Francesca",
+  "DateNaissance": "2002-01-16"
+}
+}
+
+###
+POST http://localhost:1337/api/musiques
+Content-Type: application/json
+
+{ "data": {
+  "Titre": "TU M'AS COMPRIS",
+  "Lien": "https://www.youtube.com/watch?v=CEn0vVfA_hE",
+  "chanteur": 3,
+  "Favoris": true,
+  "DateSortie": "2022-01-28",
+  "Couleur":"#134522"
+}
+}
+
+###
+POST  http://localhost:1337/api/auth/local
+content-type: application/json
+
+{
+    "identifier": "Malamadre211",
+    "password": "Alesana29."
+}
+
+###
+GET http://localhost:1337/api/articles?populate=chanteurs
