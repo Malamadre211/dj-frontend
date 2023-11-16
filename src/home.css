@@ -1,0 +1,47 @@
+.musique {
+    display: flex;
+    background-color: black;
+    min-width: 1500px;
+    height: 700px;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 30px;
+    justify-content: center;
+    text-align: center;
+}
+
+.favoris {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 600px;
+    height: 200px;
+}
+
+.recent {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 600px;
+    height: 200px;
+}
+
+h2 {
+    font-size: 18px;
+    color: violet;
+}
+
+.container-song {
+    display: flex;
+    flex-direction: row;
+    width: 200px;
+}
+
+.song {
+    flex-direction: row;
+    width: 100px;
+    height: 100px;
+    background-color: white;
+}

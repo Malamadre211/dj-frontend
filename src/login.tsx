@@ -1,48 +1,52 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import './login.css';
 
-interface LoginProps {
-  onLogin: () => void;
+
+export default function Login() {
+  const navigate = useNavigate()
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+
+  const handleChangeEmail = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+      setEmail(event.target.value)
+  }, [])
+
+  const handleChangePassword = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+      setPassword(event.target.value)
+  }, [])
+
+  const handleConnect = useCallback(async () => {
+      const response = await fetch('http://localhost:1338/api/auth/local', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              identifier: email,
+              password: password
+          })
+      })
+      const data = await response.json()
+      if(data.jwt) {
+          navigate('/home')
+      }
+      else {
+          setEmail('')
+          setPassword('')
+      }
+  }, [email, password, navigate])
+
+  return <div className="login">
+      <div className="header">
+          <h1>PlayMag</h1>
+      </div>
+      <div className="form">
+          <label htmlFor="email">Email</label>
+          <input type="email" name="email" value={email} onChange={handleChangeEmail} />
+          <label htmlFor="password">Password</label>
+          <input type="password" name="password" value={password} onChange={handleChangePassword} />
+          <button onClick={handleConnect}>Login</button>
+      </div>
+  </div>
 }
-
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
-  const [identifier, setIdentifier] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post('http://localhost:1337/api/auth/local', {
-        identifier,
-        password,
-      });
-
-      const token = response.data.jwt;
-      localStorage.setItem('token', token);
-
-      onLogin();
-    } catch (error) {
-      console.error('Erreur de connexion:', error);
-    }
-  };
-
-  return (
-    <div className="background">
-      <h2>Login</h2>
-      <label>
-        Username:  
-        <input type="text" value={identifier} onChange={(e) => setIdentifier(e.target.value)} />
-      </label>
-      <br />
-      <label>
-        Password:  
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </label>
-      <br />
-      <button onClick={handleLogin}>Login</button>
-    </div>
-  );
-};
-
-export default Login;
-

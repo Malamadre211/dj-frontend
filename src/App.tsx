@@ -1,26 +1,23 @@
-import React, { useState } from 'react';
-import Login from './Login';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
+import Login from './login.tsx';
+import Home from './home.tsx';
 
-const App: React.FC = () => {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Login />
+  },
+  {
+    path: '/home',
+    element: <Home />
+  }
+])
 
-  const handleLogin = () => {
-    setLoggedIn(true);
-  };
-
+function App() {
   return (
-    <div className="container">
-      <div className="form">
-      <h1>PlayMag</h1>
-      {isLoggedIn ? (
-        <p>Utilisateur connecté!</p>
-      ) : (
-        <Login onLogin={handleLogin} />
-      )}
-    </div>
-    </div>
-  );
-};
+    <RouterProvider router={router} />
+  )
+}
 
 export default App;
